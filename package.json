@@ -1,0 +1,43 @@
+{
+  "name": "@progalaxyelabs/stonescriptphp-chat",
+  "version": "0.1.0",
+  "description": "Generic Socket.IO chat server with JWKS authentication and plugin hooks for StoneScriptPHP platforms",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "scripts": {
+    "test": "node --test test/**/*.test.js"
+  },
+  "dependencies": {
+    "jose": "^5.9.6",
+    "socket.io": "^4.8.1"
+  },
+  "devDependencies": {
+    "socket.io-client": "^4.8.1"
+  },
+  "keywords": [
+    "chat",
+    "socket.io",
+    "real-time",
+    "jwks",
+    "jwt",
+    "rooms",
+    "stonescriptphp",
+    "websocket"
+  ],
+  "author": "ProGalaxy E-Labs <info@progalaxyelabs.com> (https://www.progalaxyelabs.com)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/progalaxyelabs/stonescriptphp-chat.git"
+  },
+  "homepage": "https://github.com/progalaxyelabs/stonescriptphp-chat#readme",
+  "bugs": {
+    "url": "https://github.com/progalaxyelabs/stonescriptphp-chat/issues"
+  }
+}
