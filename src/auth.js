@@ -18,13 +18,13 @@ const ALLOWED_ALGORITHMS = ['RS256', 'ES256'];
  * @param {object} config
  * @param {string} config.url      - Remote JWKS URL (e.g. https://auth.example.com/.well-known/jwks.json)
  * @param {string} config.issuer   - Expected JWT issuer (`iss` claim)
- * @param {string} config.audience - Expected JWT audience (`aud` claim)
+ * @param {string} [config.audience] - Expected JWT audience (`aud` claim). Optional — if not provided, aud is not validated.
  * @returns {{ verify: (token: string) => Promise<object> }}
  */
 export function createJwksVerifier({ url, issuer, audience }) {
   if (!url) throw new Error('JWKS url is required');
   if (!issuer) throw new Error('JWT issuer is required');
-  if (!audience) throw new Error('JWT audience is required');
+  // audience is optional — some auth providers don't set aud claims
 
   const JWKS = createRemoteJWKSet(new URL(url));
 
@@ -59,12 +59,16 @@ export function createJwksVerifier({ url, issuer, audience }) {
     }
 
     try {
-      const { payload } = await jwtVerify(token, JWKS, {
+      const verifyOptions = {
         issuer,
-        audience,
         algorithms: ALLOWED_ALGORITHMS,
         clockTolerance: 60, // seconds
-      });
+      };
+      // Only validate audience if configured
+      if (audience) {
+        verifyOptions.audience = audience;
+      }
+      const { payload } = await jwtVerify(token, JWKS, verifyOptions);
       return payload;
     } catch (err) {
       throw Object.assign(
