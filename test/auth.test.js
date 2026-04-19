@@ -110,10 +110,9 @@ describe('auth.js — algorithm allowlist', () => {
     );
   });
 
-  it('throws on missing audience', () => {
-    assert.throws(
-      () => createJwksVerifier({ url: 'https://example.com/.well-known/jwks.json', issuer: 'iss', audience: '' }),
-      /JWT audience is required/
+  it('allows missing audience (optional since v0.1.1)', () => {
+    assert.doesNotThrow(
+      () => createJwksVerifier({ url: 'https://example.com/.well-known/jwks.json', issuer: 'iss' })
     );
   });
 });
